@@ -1,0 +1,127 @@
+---
+title: "FNCE611 Problem Set 1"
+author: "Jessica Blum, Jordan Farrer, Marc Lanthemann"
+date: '2017-02-01'
+output: function(...) {
+
+          fmt <- rmarkdown::pdf_document(toc = TRUE, number_section = TRUE, df_print = 'kable',...)
+        
+          fmt$knitr$knit_hooks$size = function(before, options, envir) {
+            if (before) return(paste0("\n \\", options$size, "\n\n"))
+            else return("\n\n \\normalsize \n")
+          }
+        
+          return(fmt)
+        }
+
+---
+
+```{r setup, include = FALSE}
+knitr::opts_chunk$set(echo = TRUE, message = FALSE, warning = FALSE, fig.align = 'center', size = 'small')
+```
+
+# APR and EAR
+
+$$1 + EAR = \bigg(1 + \frac{APR}{m}\bigg)^m $$
+
+$$EAR = \bigg(1 + \frac{0.15}{12}\bigg)^{12} -1 =16.08\%$$
+
+# Present Value / Future Value
+
+$$PV = \frac{C}{(1+r)^t} = \frac{33000}{(1+0.05)^3}= \$28,506.60$$
+
+# Perpetuities
+
+$$PV = \frac{C}{r} = \frac{875}{0.088} = 9943.18 Rupee$$
+
+# Annuities / Mortages
+
+## (a)
+
+$$PV = \frac{C}{\frac{r}{m}}\bigg(1 - \frac{1}{(1+\frac{r}{m})^{tm}}\bigg) = \frac{PV\frac{r}{m}}{\big(1 - \frac{1}{(1+\frac{r}{m})^{tm}}\big)} = \frac{100,000\frac{0.06}{12}}{\big(1 - \frac{1}{(1+\frac{0.06}{12})^{12\times30}}\big)} = \$599.55$$
+
+## (b) Refiance
+
+Present value of remaining payments:
+
+$$PV = \frac{C}{\frac{r}{m}}\bigg(1 - \frac{1}{(1+\frac{r}{m})^{tm}}\bigg) = \frac{599.55}{\frac{0.06}{12}}\bigg(1 - \frac{1}{(1+\frac{0.06}{12})^{25\times 12}}\bigg) = 93,054.30$$
+At at 5% interest rate, the payments on the remaining present value for 25 years is
+
+$$C_{25 years} = \frac{PV\times \frac{r}{m}}{1 - \frac{1}{(1+\frac{r}{m})^{t\times m}}}=\frac{93,054.30\times \frac{0.05}{12}}{1 - \frac{1}{(1+\frac{0.05}{12})^{25\times 12}}} = 543.99$$
+
+and for 30 years is
+
+$$C_{30 years} = \frac{PV\times \frac{r}{m}}{1 - \frac{1}{(1+\frac{r}{m})^{t\times m}}}=\frac{93,054.30\times \frac{0.05}{12}}{1 - \frac{1}{(1+\frac{0.05}{12})^{30\times 12}}} = 499.54$$
+
+So, the NPV of the savings considering the $2,000 refiancing fee is
+
+$$ NPV_{25 years} = -2000 + \frac{C_{before}-C_{after}}{{\frac{r}{m}}}\bigg(1 - \frac{1}{(1+\frac{r}{m})^{t \times m}}\bigg) = -2000 +  \frac{599.55-543.99}{{\frac{0.05}{12}}}\bigg(1 - \frac{1}{(1+\frac{0.05}{12})^{25 \times 12}}\bigg) = 7,504$$
+
+$$ NPV_{30 years} = -2000 + \frac{C_{before}-C_{after}}{{\frac{r}{m}}}\bigg(1 - \frac{1}{(1+\frac{r}{m})^{t \times m}}\bigg) = -2000 +  \frac{599.55-499.54}{{\frac{0.05}{12}}}\bigg(1 - \frac{1}{(1+\frac{0.05}{12})^{30 \times 12}}\bigg) = 16,630$$
+
+As the NPV is positive for either scenario, refiancing is the preferred option. 
+
+# U.S. Treasury Securities
+
+## (a) Asking Price
+
+\begin{align}
+\ P_{ask} & = \frac{\frac{Coupon}{2}}{\frac{Yield}{2}}\bigg(1-\frac{1}{(1+\frac{Yield}{2})^{2\times years}}\bigg) + \frac{100}{(1+\frac{yield}{2})^{2\times years}} \\
+ & = \frac{\frac{0.0215}{2}}{\frac{0.01945}{2}}\bigg(1-\frac{1}{(1+\frac{0.01945}{2})^{2\times 5}}\bigg) + \frac{100}{(1+\frac{0.01945}{2})^{2\times 10}} = 100.85
+\end{align}
+
+
+## (b) Duration
+
+\begin{align}
+\ duration &= \frac{\sum_{i=1}^{N}\frac{t_i\,{cf}_i}{(1+y)^i}}{\sum_{i=1}^{N}\frac{cf_i}{(1+y)^i}} \\
+ & = \frac{\frac{1\,\frac{0.02125}{2}}{(1+\frac{0.01945}{2})^1} + \frac{2\,\frac{0.02125}{2}}{(1+\frac{0.01945}{2})^2} + \dotsm + \frac{10\,\frac{1.02125}{2}}{(1+\frac{0.01945}{2})^{10}}}{\frac{\frac{0.02125}{2}}{(1+\frac{0.01945}{2})^1} + \frac{\frac{0.02125}{2}}{(1+\frac{0.01945}{2})^2} + \dotsm + \frac{\frac{1.02125}{2}}{(1+\frac{0.01945}{2})^{10}}} \\
+ & = \frac{9.624}{1.009} = 9.54
+\end{align}
+
+Half-year duration is $9.54$, so the full year duration is $9.54 \times 0.5 = 4.77$.
+
+# Term Structure
+
+Investing in long term bonds is riskier than investing in short term bonds, therefore interest rates for longer term bonds will increase (at a diminishing rate) and lead to an upward slope
+
+# Corporate Bonds
+
+## Yield to Maturity
+
+If the coupon rate is 5.2%, then every 6 months Whole Foods will pay $1bn \times \frac{0.052}{2} = 26m$. Thus we can calculate the yield to maturity in Dec 2015 as
+
+\begin{equation}
+\ PV = \frac{coupon}{(1+\frac{y}{2})^1} + \frac{coupon}{(1+\frac{y}{2})^2} + \dotsm + \frac{FV + coupon}{(1+\frac{y}{2})^{10}}
+\end{equation}
+
+\begin{equation}
+\ 998.61 = \frac{52}{(1+\frac{y}{2})^1} + \frac{52}{(1+\frac{y}{2})^2} + \dotsm + \frac{1000 + 52}{(1+\frac{y}{2})^{10}}
+\end{equation}
+
+where
+
+```{r}
+ytm <- function(price, coupon, term, freq, prin = 100) {
+    npv <- function(yld, term, cpn, freq, prin) {
+        i <- 1:(term * freq)
+        payment <- (coupon / freq) * prin
+        disc <- (1 + yld / freq)
+        sum(payment / disc^(i)) + prin /(disc^(term * freq))
+    }
+    uniroot(function(yld) npv(yld, term, cpn, freq, prin) - price,
+interval=c(0,100), tol=0.000001)$root
+}
+
+y = ytm(price = 998.61, coupon = 0.052, term = 5, freq = 2, prin = 1000)
+```
+
+
+
+$$y = `r round(100*y, 3)`\%$$
+
+## Spread
+
+$$Spread = ytm_{Coupon} - 3\%$$
+
+$$5.23\% - 3\% = 2.23\%$$
